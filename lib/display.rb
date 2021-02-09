@@ -1,9 +1,35 @@
 
 module Display
 
-    def chess_board
-
+    def show_board(board)
+        board.each_with_index do |columns, row_index|
+            print "\e[36m  #{8 - row_index} \e[0m"
+            columns.each_with_index do |co_ord, column_index|
+                update_borad(co_ord, column_index, row_index) 
+            end
+            puts ""
+        end
+        puts "\e[36m    a b c d e f g h \e[0m"
     end
+
+    def update_borad(co_ord, column_index, row_index)
+        background = get_background(column_index, row_index)
+        print "\e[#{background}#{co_ord.push_unicode} \e[0m" unless co_ord.nil?
+        print "\e[#{background}m  \e[0m" if co_ord.nil?
+    end
+
+    def get_background(column_index, row_index)
+        if row_index % 2 == 0
+            return "47" if column_index % 2 == 0
+            return "40" if column_index % 2 == 1
+        elsif row_index % 2 == 1
+            return "40" if column_index % 2 == 0
+            return "47" if column_index % 2 == 1
+        else
+            puts "Error!"
+        end
+    end
+
 
     def start_message
         <<-HEREDOC

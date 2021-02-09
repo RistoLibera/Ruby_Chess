@@ -1,0 +1,1 @@
+This is a simple Ruby project of Classic Chess
