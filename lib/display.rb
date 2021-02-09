@@ -1,38 +1,8 @@
 
 module Display
-
-    def show_board(board)
-        board.each_with_index do |columns, row_index|
-            print "\e[36m  #{8 - row_index} \e[0m"
-            columns.each_with_index do |co_ord, column_index|
-                update_borad(co_ord, column_index, row_index) 
-            end
-            puts ""
-        end
-        puts "\e[36m    a b c d e f g h \e[0m"
-    end
-
-    def update_borad(co_ord, column_index, row_index)
-        background = get_background(column_index, row_index)
-        print "\e[#{background}#{co_ord.push_unicode} \e[0m" unless co_ord.nil?
-        print "\e[#{background}m  \e[0m" if co_ord.nil?
-    end
-
-    def get_background(column_index, row_index)
-        if row_index % 2 == 0
-            return "47" if column_index % 2 == 0
-            return "40" if column_index % 2 == 1
-        elsif row_index % 2 == 1
-            return "40" if column_index % 2 == 0
-            return "47" if column_index % 2 == 1
-        else
-            puts "Error!"
-        end
-    end
-
-
     def start_message
         <<-HEREDOC
+
         Let's play Chess!
 
         input 1 to play with computer,
@@ -42,10 +12,47 @@ module Display
         HEREDOC
     end
 
-    def choose_color
+    def input_error
+        <<-HEREDOC
+
+        Input Error!
+        Please input again
+
+        HEREDOC
+    end
+
+    def player_one_prompt
+        <<-HEREDOC
+
+        Please input player one's name,
+        which must be longer than one character.
+
+        HEREDOC
+    end
+
+    def player_two_prompt
+        <<-HEREDOC
+
+        Please input player two's name, or computer's,
+        which must be longer than one character.
+
+        HEREDOC
+    end
+
+
+    def black_or_white
         <<-HEREDOC
 
         Please input w to be WHITE, b to be BLACK.
+
+        HEREDOC
+    end
+
+    def turn_message(count, name)
+        <<-HEREDOC
+
+        Turn Number #{count}
+        #{name} to move
 
         HEREDOC
     end
@@ -62,7 +69,7 @@ module Display
     def move_chess
         <<-HEREDOC
 
-        Please input where you want to move,
+        Please input where you want to move, red block is where you could move
         example: a4
 
         HEREDOC
@@ -71,7 +78,7 @@ module Display
     def end_message
         <<-HEREDOC
 
-        Continue to play?
+        Play again?
 
         input 1 to start a new game
         input 2 to load a saved game
