@@ -11,23 +11,27 @@ class Game
         @player_two = ""
         @existed_name = ""
         @game_board = ""
-        @count = 0
+        @round_count = 0
     end
 
+    # First Execution
     def start_game
         puts start_message
         choose_playmode()
     end
-
+    
+    # subfucntions of start_game
     def choose_playmode
         input = gets.chomp.to_i
         case input
         when 1
             initialize_player(input)
             get_game_board()
+            play_turn()
         when 2
             initialize_player(input)
             get_game_board()
+            play_turn()
         when 3
             #load
         else
@@ -79,6 +83,24 @@ class Game
     def get_game_board
         @game_board = Board.new
         @game_board.initialize_board
+    end
+
+    # Second Execution
+    def play_turn
+
+        # until game_over?
+
+        @round_count += 1
+        player_action(@round_count, @player_one)
+        # return whatwhat if game over
+        player_action(@round_count, @player_two)
+        # return whatwhat if game over
+
+    end
+
+    def player_action(round_count, player)
+        select_chess(round_count, player)
+        move_chess(round_count, player)
     end
 
 end

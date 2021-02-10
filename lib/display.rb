@@ -48,36 +48,31 @@ module Display
         HEREDOC
     end
 
-    def turn_message(count, name)
+    def selection_hint(round_count, name, faction)
         <<-HEREDOC
 
-        Turn Number #{count}
-        #{name} to move
-
-        HEREDOC
-    end
-
-    def select_chess
-        <<-HEREDOC
-
-        Please input the co-ordiantes of your choice,
+        Turn Number #{round_count}, #{name} to move.
+        Please input the co-ordiantes of #{faction} chess,
         example: a2
 
         HEREDOC
     end
 
-    def move_chess
+    def movement_hint(round_count, name)
         <<-HEREDOC
 
+        Turn Number #{round_count}, #{name} to move.
         Please input where you want to move, red block is where you could move
         example: a4
 
         HEREDOC
     end
 
-    def end_message
+    def game_over(round_count)
         <<-HEREDOC
 
+        Within #{round_count} rounds a winner arises!
+        
         Play again?
 
         input 1 to start a new game

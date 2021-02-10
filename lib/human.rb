@@ -2,8 +2,8 @@ require_relative "display.rb"
 
 class Human
     include Display
-    def initialize(player_name, faction = "white")
-        @player_name = player_name
+    def initialize(name, faction = "white")
+        @name = name
         @faction = faction
     end
 
