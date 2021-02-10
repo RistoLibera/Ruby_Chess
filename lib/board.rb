@@ -68,7 +68,9 @@ class Board
     # move chess
     def move_chess(round_count, player)
         show_board()
+        @selected_chess = ""
         puts movement_hint(round_count, player.name)
+        # nil move  chess don't
 
     end
 
@@ -141,22 +143,35 @@ class Board
 
     def update_borad(co_ord, column_index, row_index)
         background = get_background(column_index, row_index)
-        #
-        print "\e[#{background}#{co_ord.push_unicode} \e[0m" unless co_ord.nil?
-        print "\e[#{background}m  \e[0m" if co_ord.nil?
-        #case status when...end    function has an additional argument
+        if selected_position?(column_index, row_index)
+            print "\e[46m  \e[0m"
+        elsif potential_movement?(column_index, row_index)
+            print "\e[41m  \e[0m"
+        elsif co_ord
+            print "\e[#{background}#{co_ord.push_unicode} \e[0m"  
+        elsif
+            print "\e[#{background}m  \e[0m"  
+        end
     end
 
     def get_background(column_index, row_index)
         if row_index % 2 == 0
-            return "47" if column_index % 2 == 0
-            return "40" if column_index % 2 == 1
+            return "47" if column % 2 == 0
+            return "40" if column % 2 == 1
         elsif row_index % 2 == 1
-            return "40" if column_index % 2 == 0
-            return "47" if column_index % 2 == 1
+            return "40" if column % 2 == 0
+            return "47" if column % 2 == 1
         else
             puts "Error!"
         end
+    end
+
+    def selected_position?(column_index, row_index)
+        return true if @selected_chess.location == [row_index, column_index]
+    end
+
+    def potential_movement?(column_index, row_index)
+        #
     end
 
 end

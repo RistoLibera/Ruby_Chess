@@ -2,7 +2,7 @@ require_relative "display.rb"
 
 class Human
     include Display
-    def initialize(name, faction = "white")
+    def initialize(name = "example", faction = "white")
         @name = name
         @faction = faction
     end
