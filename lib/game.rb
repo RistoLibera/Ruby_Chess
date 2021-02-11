@@ -41,8 +41,8 @@ class Game
     end
 
     def initialize_player(game_mode)
-        faction = initialize_player_one()
-        initialize_player_two(faction, game_mode)
+        another_faction = initialize_player_one()
+        initialize_player_two(another_faction, game_mode)
     end
 
     def initialize_player_one
@@ -50,7 +50,8 @@ class Game
         name = get_player_name()
         @existed_name = name
         @player_one = Human.new(name)
-        return faction_feedback(@player_one)  
+        another_faction = faction_feedback(@player_one)  
+        return another_faction
     end
 
     def faction_feedback(player)
@@ -99,11 +100,15 @@ class Game
     end
 
     def player_action(round_count, player)
-        select_chess(round_count, player)
-        move_chess(round_count, player)
+        @game_board.select_chess(round_count, player)
+        @game_board.move_chess(round_count, player)
+    end
+
+    def game_over?
+        # if king exists?
     end
 
 end
 
-# game = Game.new
-# game.start_game
+game = Game.new
+game.start_game

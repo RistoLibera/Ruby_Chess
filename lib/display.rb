@@ -58,11 +58,19 @@ module Display
         HEREDOC
     end
 
+    def invalid_selection
+        <<-HEREDOC
+
+        Selected chess can not be moved!
+        HEREDOC
+    end
+
     def movement_hint(round_count, name)
         <<-HEREDOC
 
         Turn Number #{round_count}, #{name} to move.
-        Please input where you want to move, red block is where you could move
+        Please input where you want to move, red block is where you could move,
+        and chess having no potential movement couldn't be selected!
         example: a4
 
         HEREDOC

@@ -1,7 +1,10 @@
 require_relative "display.rb"
 
 class Computer
-    include Display    
+    attr_reader :name
+    attr_reader :faction
+    include Display 
+       
     def initialize(name, faction = "black")
         @name = name
         @faction = faction

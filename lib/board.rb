@@ -5,13 +5,17 @@ require_relative "pieces/pawn.rb"
 require_relative "pieces/queen.rb"
 require_relative "pieces/rook.rb"
 require_relative "display.rb"
+require_relative "human.rb"
+require_relative "computer.rb"
 
 class Board
+    attr_reader :board
     include Display
+    
     def initialize
-        # Row is counted from top to bottom
-        @board = Array.new(8){ Array.new(8)}
-        @selected_faction = ""
+        # Row is counted from top to bottom, and column left to right.
+        # "" is empty block on board, and nil will be out of board.
+        @board = Array.new(8){ Array.new(8){""}}
         @selected_chess = ""
     end
 
@@ -62,41 +66,45 @@ class Board
         show_board()
         puts selection_hint(round_count, player.name, player.faction)
         get_chess(player.faction)
-        #highlight block
     end
 
     # move chess
     def move_chess(round_count, player)
         show_board()
-        @selected_chess = ""
         puts movement_hint(round_count, player.name)
-        # nil move  chess don't
 
+        # @selected_chess = ""
     end
 
     #Subfunctions of select_chess and move_chess
     def get_chess(player_faction)
-        RANGE = /^[a-f][0-8]$/
+        range = /^[a-h][1-8]$/i
         input = gets.chomp
-        update_selected(input)
-        until input.match?(RANGE) && 
-            @selected_faction == player_faction && @selected_chess do
+        until input.match?(range) && check_selected(input, player_faction) do
             puts input_error
             input = gets.chomp
-            update_selected(input)
         end
+
+        
     end
 
-    def update_selected(input)
+    def check_selected(input, faction)
         array = convert_input(input)
-        @selected_faction = get_faction(array)
-        @selected_chess = @board[array[0]][array[1]]
+        chess = @board[array[1]][array[0]]
+        if chess != "" && chess.color == faction && chess.selectable?(@board)
+            @selected_chess = chess
+            return true
+        else
+            return false
+        end
+        # around places have or have not chesses?
     end
 
     def convert_input(input)
         array = input.split("")
-        array[0] = convert_char(array[0])
-        array[1] = (8 - array[1].to_i)
+        # 0 is column, 1 is row.
+        array[0] = convert_char(array[0]).to_i
+        array[1] = (8 - array[1].to_i).to_i
         return array
     end
 
@@ -123,12 +131,6 @@ class Board
         end
     end
 
-    def get_faction(array)
-        row = array[0]
-        column = array[1]
-        faction = @board[row][column].color
-    end
-
     # display board in the terminal
     def show_board
         @board.each_with_index do |columns, row_index|
@@ -147,7 +149,7 @@ class Board
             print "\e[46m  \e[0m"
         elsif potential_movement?(column_index, row_index)
             print "\e[41m  \e[0m"
-        elsif co_ord
+        elsif co_ord != ""
             print "\e[#{background}#{co_ord.push_unicode} \e[0m"  
         elsif
             print "\e[#{background}m  \e[0m"  
@@ -156,22 +158,23 @@ class Board
 
     def get_background(column_index, row_index)
         if row_index % 2 == 0
-            return "47" if column % 2 == 0
-            return "40" if column % 2 == 1
+            return "47" if column_index % 2 == 0
+            return "40" if column_index % 2 == 1
         elsif row_index % 2 == 1
-            return "40" if column % 2 == 0
-            return "47" if column % 2 == 1
+            return "40" if column_index % 2 == 0
+            return "47" if column_index % 2 == 1
         else
             puts "Error!"
         end
     end
 
     def selected_position?(column_index, row_index)
+        return false if @selected_chess == ""
         return true if @selected_chess.location == [row_index, column_index]
     end
 
     def potential_movement?(column_index, row_index)
-        #
+        return false
     end
 
 end
