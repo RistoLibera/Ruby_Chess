@@ -72,7 +72,8 @@ class Board
     def move_chess(round_count, player)
         show_board()
         puts movement_hint(round_count, player.name)
-
+        
+        #take_chess()
         # @selected_chess = ""
     end
 
@@ -91,7 +92,7 @@ class Board
     def check_selected(input, faction)
         array = convert_input(input)
         chess = @board[array[1]][array[0]]
-        if chess != "" && chess.color == faction && chess.selectable?(@board)
+        if chess != "" && chess.color == faction && chess.movable?(@board)
             @selected_chess = chess
             return true
         else
@@ -174,6 +175,10 @@ class Board
     end
 
     def potential_movement?(column_index, row_index)
+        each do
+        @selected_chess.movable_space
+        return true 
+        or 
         return false
     end
 

@@ -19,4 +19,38 @@ RSpec.describe Board do
             expect(background).to eql "40"
         end
     end
+    
+    describe "" do
+        subject(){ described_class.new}
+
+        it "" do
+        end
+    end
+
+    describe "" do
+        subject(){ described_class.new}
+
+        it "" do
+        end
+    end
+
+    describe "" do
+        subject(){ described_class.new}
+
+        it "" do
+        end
+    end
+
+    describe "" do
+        subject(){ described_class.new}
+
+        it "" do
+        end
+    end
+
+
+
+
+
+
 end

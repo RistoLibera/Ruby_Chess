@@ -10,7 +10,8 @@ class Queen
         @color = color
         #queen moves towards all directions.
         #space needed to be selected.
-        @space = [[-1, +1], [+1, +1], [-1, -1], [+1, -1]]
+        @move = [[-1, +1], [+1, +1], [-1, -1], [+1, -1], [+1, 0], [-1, 0], [0, +1], [0, -1] ]
+        @movable_space = []
     end
 
     def push_unicode

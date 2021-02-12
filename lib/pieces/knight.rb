@@ -10,7 +10,8 @@ class Knight
         @color = color
         #knight moves by L shape.
         #space needed to be selected.
-        @space = [[-1, +1], [+1, +1], [-1, -1], [+1, -1]]
+        @move = [[-2, -1], [-2, +1], [+2, -1], [+2, +1], [-1, -2], [+1, -2], [-1, +2], [+1, +2]]
+        @movable_space = []
     end
     
     def push_unicode

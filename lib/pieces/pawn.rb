@@ -10,7 +10,9 @@ class Pawn
         @color = color
         #pawn moves forward by one or two in the first step, only one in the nexts.
         #space needed to be selected.
-        @space = [[-1, +1], [+1, +1], [-1, -1], [+1, -1]]
+        @white_move = [[-1, 0], [-2, 0]]
+        @black_move = [[+1, 0], [+2 ,0]]
+        @movable_space = []
     end
     
     def push_unicode

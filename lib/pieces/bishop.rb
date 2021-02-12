@@ -9,8 +9,8 @@ class Bishop
         @location = location
         @color = color
         #bishop moves diagonally.
-        #space needed to be selected.
-        @space = [[-1, +1], [+1, +1], [-1, -1], [+1, -1]]
+        @move = [[-1, +1], [+1, +1], [-1, -1], [+1, -1]]
+        @movable_space = []
     end
     
     def push_unicode
@@ -18,21 +18,31 @@ class Bishop
         return ";90m\u265D" if @color == "black"
     end
 
-    def selectable?(board)
-        #this piece can not jump, then the surrounding should has no pieces.
+    def movable?(board)
         feedback = false
         update_space()
-        @space.each do |movement|
-            row = movement[0]
-            column = movement[1]
-            next if board[row][column] == nil
-            feedback = true if board[row][column] == ""
-        end
+        feedback = true if @movable_space.length != 0
         puts invalid_selection unless feedback 
         return feedback   
     end
 
+
+
     def update_space()
+        @move.each do |move|
+            row =
+            column =
+            position = @board[row][column]
+            until position == nil || position != "" do
+                
+                
+            end
+
+        end
+
+        until @board == nil or @board has value != ""
+
+
         length = @space.length
         row = location[0]
         column = location[1]

@@ -10,7 +10,8 @@ class Rook
         @color = color
         #rook moves vertically and horizontally.
         #space needed to be selected.
-        @space = [[-1, +1], [+1, +1], [-1, -1], [+1, -1]]
+        @move = [[+1, 0], [-1, 0], [0, +1], [0, -1]]
+        @movable_space = []
     end
 
     def push_unicode
@@ -18,6 +19,11 @@ class Rook
         return ";90m\u265C" if @color == "black"
     end   
     
+
+    def movable?(board)
+
+    end
+
     def selectable?(board)
         #this piece can not jump, then the surrounding should has no pieces.
         feedback = false
