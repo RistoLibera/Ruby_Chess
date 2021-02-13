@@ -3,6 +3,7 @@ require_relative "../display.rb"
 class King
     attr_reader :color
     attr_reader :location
+    attr_reader :movable_space
     include Display
 
     def initialize(color, location)
@@ -33,7 +34,7 @@ class King
             column = move[1] + @location[1]
             break unless row.between?(0,7) && column.between?(0,7)
             position = board[row][column]
-            @movable_space << position if position == "" || position.color != @color
+            @movable_space << [row,column] if position == "" || position.color != @color
         end
     end
 end

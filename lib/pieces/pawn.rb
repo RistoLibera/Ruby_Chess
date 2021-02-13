@@ -37,11 +37,11 @@ class Pawn
             while row.between?(0, 7) && column.between?(0, 7) do
                 position = board[row][column]
                 if position == ""
-                    @movable_space << position
+                    @movable_space << [row,column]
                     row += move[0]
                     column += move[1]
                 elsif position.color != @color
-                    @movable_space << position
+                    @movable_space << [row,column]
                     break
                 else
                     break

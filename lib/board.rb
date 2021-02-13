@@ -74,7 +74,7 @@ class Board
         puts movement_hint(round_count, player.name)
         
         #take_chess()
-        # @selected_chess = ""
+        @selected_chess = ""
     end
 
     #Subfunctions of select_chess and move_chess
@@ -136,22 +136,25 @@ class Board
     def show_board
         @board.each_with_index do |columns, row_index|
             print "\e[36m  #{8 - row_index} \e[0m"
-            columns.each_with_index do |co_ord, column_index|
-                update_borad(co_ord, column_index, row_index) 
+            columns.each_with_index do |position, column_index|
+                update_borad(position, column_index, row_index) 
             end
             puts ""
         end
         puts "\e[36m    a b c d e f g h \e[0m"
     end
 
-    def update_borad(co_ord, column_index, row_index)
+    def update_borad(position, column_index, row_index)
         background = get_background(column_index, row_index)
+
         if selected_position?(column_index, row_index)
-            print "\e[46m  \e[0m"
+            print "\e[46#{position.push_unicode} \e[0m"
+        elsif position != "" && potential_movement?(column_index, row_index)
+            print "\e[41#{position.push_unicode} \e[0m"
         elsif potential_movement?(column_index, row_index)
             print "\e[41m  \e[0m"
-        elsif co_ord != ""
-            print "\e[#{background}#{co_ord.push_unicode} \e[0m"  
+        elsif position != ""
+            print "\e[#{background}#{position.push_unicode} \e[0m"  
         elsif
             print "\e[#{background}m  \e[0m"  
         end
@@ -175,11 +178,9 @@ class Board
     end
 
     def potential_movement?(column_index, row_index)
-        # each do
-        # @selected_chess.movable_space
-        # return true 
-        # or 
-        return false
+        co_ord = [row_index,column_index]
+        return false if @selected_chess == ""
+        return true if @selected_chess.movable_space.include?(co_ord)
     end
 
 end
