@@ -51,7 +51,7 @@ module Display
     def selection_hint(round_count, name, faction)
         <<-HEREDOC
 
-        Turn Number #{round_count}, #{name} to move.
+        Turn Number #{round_count}, (#{name}) to move.
         Please input the co-ordiantes of #{faction} chess,
         example: a2
 
@@ -68,7 +68,7 @@ module Display
     def movement_hint(round_count, name)
         <<-HEREDOC
 
-        Turn Number #{round_count}, #{name} to move.
+        Turn Number #{round_count}, (#{name}) to move.
         Please input where you want to move, red block is where you could move,
         and chess having no potential movement couldn't be selected!
         example: a4

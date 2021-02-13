@@ -20,49 +20,30 @@ class Bishop
 
     def movable?(board)
         feedback = false
-        update_space()
+        update_space(board)
         feedback = true if @movable_space.length != 0
         puts invalid_selection unless feedback 
         return feedback   
     end
 
-
-
-    def update_space()
+    def update_space(board)
         @move.each do |move|
-            row =
-            column =
-            position = @board[row][column]
-            until position == nil || position != "" do
-                
-                
+            row = move[0] + @location[0]
+            column = move[1] + @location[1]
+            while row.between?(0, 7) && column.between?(0, 7) do
+                position = board[row][column]
+                if position == ""
+                    @movable_space << position
+                    row += move[0]
+                    column += move[1]
+                elsif position.color != @color
+                    @movable_space << position
+                    break
+                else
+                    break
+                end
             end
-
         end
-
-        until @board == nil or @board has value != ""
-
-
-        length = @space.length
-        row = location[0]
-        column = location[1]
-        length.times do |i|
-            @space[i][0] += row
-            @space[i][1] += column
-        end
-        delete_impossible()
     end
-
-    def delete_impossible
-        length = @space.length
-        container = []
-        length.times do |i|
-            row = @space[i][0] 
-            column = @space[i][1]    
-            container << @space[i] if row.between?(0,7) && column.between?(0,7)
-        end
-        @space = container
-    end
-
     
 end

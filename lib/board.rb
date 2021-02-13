@@ -175,10 +175,10 @@ class Board
     end
 
     def potential_movement?(column_index, row_index)
-        each do
-        @selected_chess.movable_space
-        return true 
-        or 
+        # each do
+        # @selected_chess.movable_space
+        # return true 
+        # or 
         return false
     end
 

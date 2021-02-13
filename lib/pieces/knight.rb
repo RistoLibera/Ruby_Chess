@@ -19,40 +19,23 @@ class Knight
         return ";90m\u265E" if @color == "black"
     end
 
-    def selectable?(board)
-        #this piece can not jump, then the surrounding should has no pieces.
+
+    def movable?(board)
         feedback = false
-        update_space()
-        @space.each do |movement|
-            row = movement[0]
-            column = movement[1]
-            next if board[row][column] == nil
-            feedback = true if board[row][column] == ""
-        end
+        update_space(board)
+        feedback = true if @movable_space.length != 0
         puts invalid_selection unless feedback 
         return feedback   
     end
 
-    def update_space()
-        length = @space.length
-        row = location[0]
-        column = location[1]
-        length.times do |i|
-            @space[i][0] += row
-            @space[i][1] += column
+    def update_space(board)
+        @move.each do |move|
+            row = move[0] + @location[0]
+            column = move[1] + @location[1]
+            break unless row.between?(0,7) && column.between?(0,7)
+            position = board[row][column]
+            @movable_space << position if position == "" || position.color != @color
         end
-        delete_impossible()
     end
-
-    def delete_impossible
-        length = @space.length
-        container = []
-        length.times do |i|
-            row = @space[i][0] 
-            column = @space[i][1]    
-            container << @space[i] if row.between?(0,7) && column.between?(0,7)
-        end
-        @space = container
-    end
-
 end
+
