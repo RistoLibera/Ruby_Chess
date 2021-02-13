@@ -2,8 +2,9 @@ require_relative "../display.rb"
 
 class Pawn
     attr_reader :color
-    attr_reader :location
+    attr_accessor :location
     attr_reader :movable_space
+    attr_reader :has_promotion
     include Display
 
     def initialize(color, location)
@@ -11,7 +12,6 @@ class Pawn
         @color = color
         #pawn moves forward by one or two in the first step, only one in the nexts.
         @movable_space = []
-        @replace = []
         @has_promotion = true
     end
     
@@ -31,6 +31,7 @@ class Pawn
 
     #when in the original co-ord has the choice to move one or two
     def update_space(board)
+        @movable_space = []
         row = @location[0]
         column = @location[1]
         case @color

@@ -8,6 +8,7 @@ require_relative "display.rb"
 require_relative "human.rb"
 require_relative "computer.rb"
 
+require "pry"
 class Board
     attr_reader :board
     include Display
@@ -72,12 +73,12 @@ class Board
     def move_chess(round_count, player)
         show_board()
         puts movement_hint(round_count, player.name)
-        
-        #take_chess()
+        loser = take_chess()
         @selected_chess = ""
+        return loser
     end
 
-    #Subfunctions of select_chess and move_chess
+    #Subfunction of select_chess
     def get_chess(player_faction)
         range = /^[a-h][1-8]$/i
         input = gets.chomp
@@ -85,27 +86,92 @@ class Board
             puts input_error
             input = gets.chomp
         end
-
-        
     end
 
     def check_selected(input, faction)
         array = convert_input(input)
-        chess = @board[array[1]][array[0]]
+        chess = @board[array[0]][array[1]]
         if chess != "" && chess.color == faction && chess.movable?(@board)
             @selected_chess = chess
             return true
         else
             return false
         end
-        # around places have or have not chesses?
+    end
+
+    #Subfunction of move_chess
+    def take_chess
+        array = get_input_array()
+        loser = get_result(array)
+        return loser
+    end
+
+    def get_input_array
+        space = @selected_chess.movable_space
+        range = /^[a-h][1-8]$/i
+        input = gets.chomp
+        array = convert_input(input)
+
+        until input.match?(range) && space.include?([array[0], array[1]]) do
+            puts input_error
+            input = gets.chomp
+            array = convert_input(input)
+        end
+        return array
+    end
+
+    def get_result(array)
+        old_row = @selected_chess.location[0]
+        old_column = @selected_chess.location[1]
+        new_row = array[0]
+        new_column = array[1]
+        promotion = @selected_chess.has_promotion
+        loser = ""
+
+        if (promotion && new_row == 0) || (promotion && new_row == 7)
+            faction = @selected_chess.color
+            range = ["b", "k", "r", "q"]
+            puts promotion_hint
+            input = gets.chomp
+            
+            until range.include?(input) do
+                puts input_error
+                input = gets.chomp
+            end
+            loser = @board[new_row][new_column].color if @board[new_row][new_column].instance_of? King
+            new_chess = get_new_chess(input, new_row, new_column, faction)
+            @board[new_row][new_column] = new_chess
+            @board[old_row][old_column] = ""
+        else
+            loser = @board[new_row][new_column].color if @board[new_row][new_column].instance_of? King
+            @board[new_row][new_column] = @selected_chess
+            @selected_chess.location = [new_row,new_column]
+            @board[old_row][old_column] = ""
+        end
+        return loser
+    end
+
+    def get_new_chess(input, row, column, color)
+        location = [row, column]
+        case input
+        when "b"
+            new_chess = Bishop.new(color, location )
+        when "k"
+            new_chess = King.new(color, location )
+        when "r"
+            new_chess = Rook.new(color, location )
+        when "q"
+            new_chess = Queen.new(color, location )
+        else
+            puts "Error"
+        end
+        return new_chess
     end
 
     def convert_input(input)
-        array = input.split("")
-        # 0 is column, 1 is row.
-        array[0] = convert_char(array[0]).to_i
-        array[1] = (8 - array[1].to_i).to_i
+        array = input.split("").reverse
+        array[0] = (8 - array[0].to_i).to_i
+        array[1] = convert_char(array[1]).to_i
         return array
     end
 
@@ -128,7 +194,7 @@ class Board
         when "h"
             return "7"
         else
-            puts "Error!"
+            return "!"
         end
     end
 
@@ -182,5 +248,6 @@ class Board
         return false if @selected_chess == ""
         return true if @selected_chess.movable_space.include?(co_ord)
     end
+
 
 end

@@ -51,8 +51,8 @@ module Display
     def selection_hint(round_count, name, faction)
         <<-HEREDOC
 
-        Turn Number #{round_count}, (#{name}) to move.
-        Please input the co-ordiantes of #{faction} chess,
+        Turn Number #{round_count}, #{name}(#{faction}) to move.
+        Please input the co-ordiantes of your chess,
         example: a2
 
         HEREDOC
@@ -68,24 +68,35 @@ module Display
     def movement_hint(round_count, name)
         <<-HEREDOC
 
-        Turn Number #{round_count}, (#{name}) to move.
+        Turn Number #{round_count}, #{name} to move.
         Please input where you want to move, red block is where you could move,
-        and chess having no potential movement couldn't be selected!
         example: a4
 
         HEREDOC
     end
 
-    def game_over(round_count)
+    def promotion_hint
+        <<-HEREDOC
+        
+        This pawn needs promotion,
+        please input "b" for bishop, "k" for knight,
+        "r" for rook, and "q" for queen.
+
+        HEREDOC
+    end
+
+    def game_over(round_count, winner_name, winner_faction)
         <<-HEREDOC
 
         Within #{round_count} rounds a winner arises!
-        
+        #{winner_name}(#{winner_faction}) wins!
+
         Play again?
 
         input 1 to start a new game
         input 2 to load a saved game
-
+        input others to quit
+        
         HEREDOC
     end
 

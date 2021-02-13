@@ -2,8 +2,9 @@ require_relative "../display.rb"
 
 class Rook
     attr_reader :color
-    attr_reader :location
+    attr_accessor :location
     attr_reader :movable_space
+    attr_reader :has_promotion
     include Display
 
     def initialize(color, location)
@@ -13,6 +14,7 @@ class Rook
         #space needed to be selected.
         @move = [[+1, 0], [-1, 0], [0, +1], [0, -1]]
         @movable_space = []
+        @has_promotion = false
     end
 
     def push_unicode
@@ -29,6 +31,7 @@ class Rook
     end
 
     def update_space(board)
+        @movable_space = []
         @move.each do |move|
             row = move[0] + @location[0]
             column = move[1] + @location[1]

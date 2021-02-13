@@ -6,12 +6,15 @@ require_relative "display.rb"
 
 class Game
     include Display
+    include GameData
     def initialize(existed_name = "")
         @player_one = ""
         @player_two = ""
         @existed_name = ""
         @game_board = ""
         @round_count = 0
+        @loser = ""
+        @winner = ""
     end
 
     # First Execution
@@ -88,24 +91,44 @@ class Game
 
     # Second Execution
     def play_turn
-
-        # until game_over?
-
-        @round_count += 1
-        player_action(@round_count, @player_one)
-        # return whatwhat if game over
-        player_action(@round_count, @player_two)
-        # return whatwhat if game over
-
+        until 1 == 0 do
+            @round_count += 1
+            player_action(@round_count, @player_one)
+            break if has_winner?
+            player_action(@round_count, @player_two)  
+            break if has_winner?  
+        end
+        game_over_option()
     end
 
     def player_action(round_count, player)
         @game_board.select_chess(round_count, player)
-        @game_board.move_chess(round_count, player)
+        @loser = @game_board.move_chess(round_count, player)
     end
 
-    def game_over?
-        # if king exists?
+    def has_winner?
+        if @player_one.faction == @loser
+            @winner = @player_two
+            return true
+        elsif @player_two.faction == @loser
+            @winner = @player_one
+            return true
+        else
+            return false
+        end
+    end
+
+    def game_over_option
+        puts game_over(@round_count, @winner.name, @winner.faction)
+        input = gets.chomp.to_i
+        case input
+        when 1
+          start_game()
+        when 2
+           #load
+        else
+            return
+        end    
     end
 
 end
