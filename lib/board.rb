@@ -11,6 +11,8 @@ require_relative "computer.rb"
 require "pry"
 class Board
     attr_reader :board
+    attr_reader :selected_chess
+    attr_reader :loser
     include Display
     
     def initialize
@@ -18,6 +20,7 @@ class Board
         # "" is empty block on board, and nil will be out of board.
         @board = Array.new(8){ Array.new(8){""}}
         @selected_chess = ""
+        @loser = ""
     end
 
     def initialize_board
@@ -62,33 +65,8 @@ class Board
         end
     end
 
-    #select chess
-    def select_chess(round_count, player)
-        show_board()
-        puts selection_hint(round_count, player.name, player.faction)
-        get_chess(player.faction)
-    end
-
-    # move chess
-    def move_chess(round_count, player)
-        show_board()
-        puts movement_hint(round_count, player.name)
-        loser = take_chess()
-        @selected_chess = ""
-        return loser
-    end
-
     #Subfunction of select_chess
-    def get_chess(player_faction)
-        range = /^[a-h][1-8]$/i
-        input = gets.chomp
-        until input.match?(range) && check_selected(input, player_faction) do
-            puts input_error
-            input = gets.chomp
-        end
-    end
-
-    def check_selected(input, faction)
+    def get_chess(faction, input)
         array = convert_input(input)
         chess = @board[array[0]][array[1]]
         if chess != "" && chess.color == faction && chess.movable?(@board)
@@ -100,25 +78,18 @@ class Board
     end
 
     #Subfunction of move_chess
-    def take_chess
-        array = get_input_array()
-        loser = get_result(array)
-        return loser
-    end
-
-    def get_input_array
-        space = @selected_chess.movable_space
-        range = /^[a-h][1-8]$/i
-        input = gets.chomp
+    def take_chess(input)
         array = convert_input(input)
-
-        until input.match?(range) && space.include?([array[0], array[1]]) do
-            puts input_error
-            input = gets.chomp
-            array = convert_input(input)
+        space = @selected_chess.movable_space
+        if space.include?([array[0], array[1]])
+            get_result(array)
+            @selected_chess = ""    
+            return true
+        else
+            return false
         end
-        return array
     end
+
 
     def get_result(array)
         old_row = @selected_chess.location[0]
@@ -126,7 +97,6 @@ class Board
         new_row = array[0]
         new_column = array[1]
         promotion = @selected_chess.has_promotion
-        loser = ""
 
         if (promotion && new_row == 0) || (promotion && new_row == 7)
             faction = @selected_chess.color
@@ -138,17 +108,16 @@ class Board
                 puts input_error
                 input = gets.chomp
             end
-            loser = @board[new_row][new_column].color if @board[new_row][new_column].instance_of? King
+            @loser = @board[new_row][new_column].color if @board[new_row][new_column].instance_of? King
             new_chess = get_new_chess(input, new_row, new_column, faction)
             @board[new_row][new_column] = new_chess
             @board[old_row][old_column] = ""
         else
-            loser = @board[new_row][new_column].color if @board[new_row][new_column].instance_of? King
+            @loser = @board[new_row][new_column].color if @board[new_row][new_column].instance_of? King
             @board[new_row][new_column] = @selected_chess
             @selected_chess.location = [new_row,new_column]
             @board[old_row][old_column] = ""
         end
-        return loser
     end
 
     def get_new_chess(input, row, column, color)

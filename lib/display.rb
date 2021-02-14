@@ -54,6 +54,7 @@ module Display
         Turn Number #{round_count}, #{name}(#{faction}) to move.
         Please input the co-ordiantes of your chess,
         example: a2
+        Or input "s" for save, "l" for load.
 
         HEREDOC
     end
@@ -71,6 +72,7 @@ module Display
         Turn Number #{round_count}, #{name} to move.
         Please input where you want to move, red block is where you could move,
         example: a4
+        Or input "s" for save, "l" for load.
 
         HEREDOC
     end

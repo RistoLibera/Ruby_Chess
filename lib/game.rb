@@ -15,6 +15,8 @@ class Game
         @round_count = 0
         @loser = ""
         @winner = ""
+        @data_change = false
+        @game_instance = self
     end
 
     # First Execution
@@ -101,10 +103,58 @@ class Game
         game_over_option()
     end
 
+    # def player_action(round_count, player)
+    #     @game_board.select_chess(round_count, player)
+    #     @loser = @game_board.move_chess(round_count, player)
+    # end
     def player_action(round_count, player)
-        @game_board.select_chess(round_count, player)
-        @loser = @game_board.move_chess(round_count, player)
+        select_chess(round_count, player)
+        move_chess(round_count, player)
     end
+
+    # select chess
+    def select_chess(round_count, player)
+        @game_board.show_board
+        puts selection_hint(round_count, player.name, player.faction)
+        input = get_input_array()
+        until @game_board.get_chess(player.faction, input) do
+            puts input_error
+            input = get_input_array()
+        end
+    end
+
+    def move_chess(round_count, player)
+        @game_board.show_board
+        puts movement_hint(round_count, player.name)
+        input = get_input_array()
+        until @game_board.take_chess(input) do
+            puts input_error
+            input = get_input_array()
+        end
+        @loser = @game_board.loser
+    end
+
+    def get_input_array
+        chess_range = /^[a-h][1-8]$/i
+        data_range = ["s", "l"]
+        input = gets.chomp
+        
+        if input.match?(chess_range) 
+            @data_change = false
+            return input
+        elsif data_range.include?(input) && @data_change == false
+            save_game(@game_instance) if input == "s"
+            load_game if input == "l"
+            @data_change = true
+            puts "\nNow chess co_ordinate please"
+            get_input_array()
+        else
+            puts input_error
+            get_input_array()
+        end
+    end
+
+    
 
     def has_winner?
         if @player_one.faction == @loser
