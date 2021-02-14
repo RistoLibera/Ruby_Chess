@@ -1,11 +1,11 @@
 --- &1 !ruby/object:Game
 player_one: !ruby/object:Human
-  name: ww
+  name: John
   faction: white
-player_two: !ruby/object:Computer
-  name: gg
+player_two: !ruby/object:Human
+  name: Wayne
   faction: black
-existed_name: ww
+existed_name: John
 game_board: !ruby/object:Board
   board:
   - - !ruby/object:Rook
@@ -175,13 +175,7 @@ game_board: !ruby/object:Board
       color: black
       movable_space: []
       has_promotion: true
-    - !ruby/object:Pawn
-      location:
-      - 1
-      - 1
-      color: black
-      movable_space: []
-      has_promotion: true
+    - ''
     - !ruby/object:Pawn
       location:
       - 1
@@ -203,13 +197,7 @@ game_board: !ruby/object:Board
       color: black
       movable_space: []
       has_promotion: true
-    - !ruby/object:Pawn
-      location:
-      - 1
-      - 5
-      color: black
-      movable_space: []
-      has_promotion: true
+    - ''
     - !ruby/object:Pawn
       location:
       - 1
@@ -229,27 +217,35 @@ game_board: !ruby/object:Board
     - ''
     - ''
     - ''
-    - ''
-    - ''
-    - ''
-  - - ''
-    - ''
-    - ''
-    - ''
-    - ''
-    - ''
-    - ''
-    - ''
-  - - ''
-    - ''
-    - ''
-    - ''
-    - ''
-    - ''
+    - !ruby/object:Pawn
+      location:
+      - 2
+      - 5
+      color: black
+      movable_space:
+      - - 2
+        - 5
+      - - 3
+        - 5
+      - - 2
+        - 5
+      has_promotion: true
     - ''
     - ''
   - - ''
-    - ''
+    - !ruby/object:Pawn
+      location:
+      - 3
+      - 1
+      color: black
+      movable_space:
+      - - 2
+        - 1
+      - - 3
+        - 1
+      - - 2
+        - 1
+      has_promotion: true
     - ''
     - ''
     - ''
@@ -258,11 +254,72 @@ game_board: !ruby/object:Board
     - ''
   - - !ruby/object:Pawn
       location:
-      - 6
+      - 4
       - 0
       color: white
-      movable_space: []
+      movable_space:
+      - - 5
+        - 0
+      - - 4
+        - 0
+      - - 5
+        - 0
       has_promotion: true
+    - ''
+    - ''
+    - ''
+    - ''
+    - !ruby/object:Pawn
+      location:
+      - 4
+      - 5
+      color: white
+      movable_space:
+      - - 5
+        - 5
+      - - 4
+        - 5
+      - - 5
+        - 5
+      has_promotion: true
+    - ''
+    - ''
+  - - ''
+    - ''
+    - !ruby/object:Knight
+      location:
+      - 5
+      - 2
+      color: white
+      move:
+      - - -2
+        - -1
+      - - -2
+        - 1
+      - - 2
+        - -1
+      - - 2
+        - 1
+      - - -1
+        - -2
+      - - 1
+        - -2
+      - - -1
+        - 2
+      - - 1
+        - 2
+      movable_space:
+      - - 5
+        - 0
+      - - 5
+        - 2
+      has_promotion: false
+    - ''
+    - ''
+    - ''
+    - ''
+    - ''
+  - - ''
     - !ruby/object:Pawn
       location:
       - 6
@@ -291,13 +348,7 @@ game_board: !ruby/object:Board
       color: white
       movable_space: []
       has_promotion: true
-    - !ruby/object:Pawn
-      location:
-      - 6
-      - 5
-      color: white
-      movable_space: []
-      has_promotion: true
+    - ''
     - !ruby/object:Pawn
       location:
       - 6
@@ -328,30 +379,7 @@ game_board: !ruby/object:Board
         - -1
       movable_space: []
       has_promotion: false
-    - !ruby/object:Knight
-      location:
-      - 7
-      - 1
-      color: white
-      move:
-      - - -2
-        - -1
-      - - -2
-        - 1
-      - - 2
-        - -1
-      - - 2
-        - 1
-      - - -1
-        - -2
-      - - 1
-        - -2
-      - - -1
-        - 2
-      - - 1
-        - 2
-      movable_space: []
-      has_promotion: false
+    - ''
     - !ruby/object:Bishop
       location:
       - 7
@@ -473,7 +501,8 @@ game_board: !ruby/object:Board
       movable_space: []
       has_promotion: false
   selected_chess: ''
-round_count: 1
+  loser: ''
+round_count: 3
 loser: ''
 winner: ''
 data_change: false

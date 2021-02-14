@@ -20,10 +20,23 @@ RSpec.describe Board do
         end
     end
     
-    describe "" do
-        subject(){ described_class.new}
+    describe "#selected_position?" do
+        subject(:board){ described_class.new}
+        let(:chess){ double("chesspiece", location: [1, 1])}
+        it "returns true if position is selected" do
+            row = 1
+            column = 1
+            allow(board).to receive(:selected_chess).and_return("")
+            result = board.selected_position?(row, column)
+            expect(result).to eql(false)
+        end
 
-        it "" do
+        it "returns false if position is not selected" do
+            row = 1
+            column = 1
+            board.instance_variable_set(:@selected_chess, chess)
+            result = board.selected_position?(row, column)
+            expect(result).to eql(true)
         end
     end
 

@@ -38,7 +38,7 @@ class Game
             get_game_board()
             play_turn()
         when 3
-            #load
+            load_game()
         else
             puts input_error
             choose_playmode()
@@ -103,10 +103,6 @@ class Game
         game_over_option()
     end
 
-    # def player_action(round_count, player)
-    #     @game_board.select_chess(round_count, player)
-    #     @loser = @game_board.move_chess(round_count, player)
-    # end
     def player_action(round_count, player)
         select_chess(round_count, player)
         move_chess(round_count, player)
@@ -116,8 +112,10 @@ class Game
     def select_chess(round_count, player)
         @game_board.show_board
         puts selection_hint(round_count, player.name, player.faction)
-        input = get_input_array()
-        until @game_board.get_chess(player.faction, input) do
+        # Judge whether computer or human
+        input = get_input_array() if player.identity == "human"
+        input = player.decide_select(@game_board) if player.identity == "computer"
+        until @game_board.get_chess(player.faction, input, player) do
             puts input_error
             input = get_input_array()
         end
@@ -126,8 +124,10 @@ class Game
     def move_chess(round_count, player)
         @game_board.show_board
         puts movement_hint(round_count, player.name)
-        input = get_input_array()
-        until @game_board.take_chess(input) do
+        # Judge whether computer or human
+        input = get_input_array() if player.identity == "human"
+        input = player.decide_move(@game_board) if player.identity == "computer"        
+        until @game_board.take_chess(input, player) do
             puts input_error
             input = get_input_array()
         end
@@ -148,6 +148,8 @@ class Game
             @data_change = true
             puts "\nNow chess co_ordinate please"
             get_input_array()
+        elsif input == "q"
+            exit!
         else
             puts input_error
             get_input_array()
@@ -175,12 +177,11 @@ class Game
         when 1
           start_game()
         when 2
-           #load
+           load_game()
         else
             return
         end    
     end
-
 end
 
 game = Game.new

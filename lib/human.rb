@@ -3,11 +3,13 @@ require_relative "display.rb"
 class Human
     attr_reader :name
     attr_reader :faction
+    attr_reader :identity
     include Display
     
     def initialize(name = "example", faction = "white")
         @name = name
         @faction = faction
+        @identity = "human"
     end
 
     # The human gets to choose first.

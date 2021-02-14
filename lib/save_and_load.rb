@@ -31,6 +31,7 @@ module GameData
         end
         filename = "save/" + input + ".yaml"
         old_game = YAML.load(File.read(filename))
+        old_game.play_turn
     end
 end
 

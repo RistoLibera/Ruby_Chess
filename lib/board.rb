@@ -66,8 +66,10 @@ class Board
     end
 
     #Subfunction of select_chess
-    def get_chess(faction, input)
-        array = convert_input(input)
+    def get_chess(faction, input, player)
+        # Judge whether computer or human
+        array = convert_input(input) if player.identity == "human"
+        array = input if player.identity == "computer" 
         chess = @board[array[0]][array[1]]
         if chess != "" && chess.color == faction && chess.movable?(@board)
             @selected_chess = chess
@@ -78,11 +80,13 @@ class Board
     end
 
     #Subfunction of move_chess
-    def take_chess(input)
-        array = convert_input(input)
+    def take_chess(input, player)
+        # Judge whether computer or human
+        array = convert_input(input) if player.identity == "human"
+        array = input if player.identity == "computer" 
         space = @selected_chess.movable_space
         if space.include?([array[0], array[1]])
-            get_result(array)
+            get_result(array, player)
             @selected_chess = ""    
             return true
         else
@@ -91,7 +95,7 @@ class Board
     end
 
 
-    def get_result(array)
+    def get_result(array, player)
         old_row = @selected_chess.location[0]
         old_column = @selected_chess.location[1]
         new_row = array[0]
@@ -102,8 +106,10 @@ class Board
             faction = @selected_chess.color
             range = ["b", "k", "r", "q"]
             puts promotion_hint
-            input = gets.chomp
-            
+            # Judge whether computer or human
+            input = gets.chomp if player.identity == "human"
+            input = player.decide_promotion() if player.identity == "computer"        
+
             until range.include?(input) do
                 puts input_error
                 input = gets.chomp
