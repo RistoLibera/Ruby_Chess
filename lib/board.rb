@@ -8,7 +8,7 @@ require_relative "display.rb"
 require_relative "human.rb"
 require_relative "computer.rb"
 
-require "pry"
+
 class Board
     attr_reader :board
     attr_reader :selected_chess
