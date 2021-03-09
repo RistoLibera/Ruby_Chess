@@ -95,9 +95,10 @@ class Game
     def play_turn
         until 1 == 0 do
             @round_count += 1
-            player_action(@round_count, @player_one)
+            player_action(@round_count, @player_one) if @round_count % 2 == 1
             break if has_winner?
-            player_action(@round_count, @player_two)  
+            @round_count += 1
+            player_action(@round_count, @player_two) if @round_count % 2 == 0
             break if has_winner?  
         end
         game_over_option()
@@ -146,7 +147,7 @@ class Game
             save_game(@game_instance) if input == "s"
             load_game if input == "l"
             @data_change = true
-            puts "\nNow chess co_ordinate please"
+            puts "\nPut chess co_ordinate to continue playing"
             get_input_array()
         elsif input == "q"
             exit!
