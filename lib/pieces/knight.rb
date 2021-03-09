@@ -16,10 +16,11 @@ class Knight
         @movable_space = []
         @has_promotion = false
     end
-    
+        
+    # reverse actual color code for a better experience
     def push_unicode
-        return ";97m\u2658" if @color == "white"
-        return ";90m\u265E" if @color == "black"
+        return ";30m\u265E" if @color == "black"
+        return ";97m\u265E" if @color == "white"
     end
 
 

@@ -15,9 +15,10 @@ class Pawn
         @has_promotion = true
     end
     
+    # reverse actual color code for a better experience
     def push_unicode
-        return ";97m\u2659" if @color == "white"
-        return ";90m\u265F" if @color == "black"
+        return ";30m\u265F" if @color == "black"
+        return ";97m\u265F" if @color == "white"
     end
 
 

@@ -16,9 +16,10 @@ class Bishop
         @has_promotion = false
     end
     
+    # reverse actual color code for a better experience
     def push_unicode
-        return ";97m\u2657" if @color == "white"
-        return ";90m\u265D" if @color == "black"
+        return ";30m\u265D" if @color == "black"
+        return ";97m\u265D" if @color == "white"
     end
 
     def movable?(board)

@@ -204,9 +204,9 @@ class Board
     def get_background(column_index, row_index)
         if row_index % 2 == 0
             return "47" if column_index % 2 == 0
-            return "40" if column_index % 2 == 1
+            return "100" if column_index % 2 == 1
         elsif row_index % 2 == 1
-            return "40" if column_index % 2 == 0
+            return "100" if column_index % 2 == 0
             return "47" if column_index % 2 == 1
         else
             puts "Error!"
