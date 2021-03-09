@@ -182,7 +182,7 @@ class Board
             end
             puts ""
         end
-        puts "\e[36m    a b c d e f g h \e[0m"
+        puts "\e[36m    a  b  c  d  e  f  g  h \e[0m"
     end
 
     def update_borad(position, column_index, row_index)
