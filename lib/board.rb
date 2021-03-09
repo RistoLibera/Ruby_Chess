@@ -193,11 +193,11 @@ class Board
         elsif position != "" && potential_movement?(column_index, row_index)
             print "\e[41#{position.push_unicode} \e[0m"
         elsif potential_movement?(column_index, row_index)
-            print "\e[41m  \e[0m"
+            print "\e[41m   \e[0m"
         elsif position != ""
             print "\e[#{background}#{position.push_unicode} \e[0m"  
         elsif
-            print "\e[#{background}m  \e[0m"  
+            print "\e[#{background}m   \e[0m"  
         end
     end
 
