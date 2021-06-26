@@ -1,3 +1,7 @@
+# Project: Ruby Chess
+
+## Content
+
 A Ruby project of classic chess.
 
 And you can play it through:
