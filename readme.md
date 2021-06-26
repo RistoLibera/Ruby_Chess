@@ -1,4 +1,4 @@
-This is a simple Ruby project of Classic Chess.
+A Ruby project of classic chess.
 
 And you can play it through:
 https://repl.it/@qofgxnm7b/RubyChess#.replit
