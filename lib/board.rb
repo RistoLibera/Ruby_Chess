@@ -176,7 +176,7 @@ class Board
     # display board in the terminal
     def show_board
         @board.each_with_index do |columns, row_index|
-            print "\e[36m  #{8 - row_index} \e[0m"
+            print "\e[36m #{8 - row_index} \e[0m"
             columns.each_with_index do |position, column_index|
                 update_borad(position, column_index, row_index) 
             end
