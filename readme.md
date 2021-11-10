@@ -1,5 +1,8 @@
 # Project: Ruby Chess
 
+- Part of Odin Project: Ruby Final Project.
+- Class URL: https://www.theodinproject.com/paths/full-stack-ruby-on-rails/courses/ruby-programming/lessons/ruby-final-project
+
 ## Content
 
 A Ruby project of classic chess.
