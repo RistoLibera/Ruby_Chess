@@ -32,10 +32,12 @@ class Game
         when 1
             initialize_player(input)
             get_game_board()
+            @round_count += 1
             play_turn()
         when 2
             initialize_player(input)
             get_game_board()
+            @round_count += 1
             play_turn()
         when 3
             load_game()
@@ -94,10 +96,8 @@ class Game
     # Second Execution
     def play_turn
         until 1 == 0 do
-            @round_count += 1
             player_action(@round_count, @player_one) if @round_count % 2 == 1
             break if has_winner?
-            @round_count += 1
             player_action(@round_count, @player_two) if @round_count % 2 == 0
             break if has_winner?  
         end
@@ -107,6 +107,7 @@ class Game
     def player_action(round_count, player)
         select_chess(round_count, player)
         move_chess(round_count, player)
+        @round_count += 1
     end
 
     # select chess
