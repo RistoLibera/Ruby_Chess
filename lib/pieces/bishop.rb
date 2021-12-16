@@ -19,7 +19,7 @@ class Bishop
     # reverse actual color code for a better experience
     def push_unicode
         return ";30m\u265D" if @color == "black"
-        return ";97m\u265D" if @color == "white"
+        return ";30m\u2657" if @color == "white"
     end
 
     def movable?(board)

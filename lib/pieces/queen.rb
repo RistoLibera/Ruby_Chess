@@ -20,7 +20,7 @@ class Queen
     # reverse actual color code for a better experience
     def push_unicode
         return ";30m\u265B" if @color == "black"
-        return ";97m\u265B" if @color == "white"
+        return ";30m\u2655" if @color == "white"
     end
 
 

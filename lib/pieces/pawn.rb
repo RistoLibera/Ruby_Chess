@@ -18,7 +18,7 @@ class Pawn
     # reverse actual color code for a better experience
     def push_unicode
         return ";30m\u265F" if @color == "black"
-        return ";97m\u265F" if @color == "white"
+        return ";30m\u2659" if @color == "white"
     end
 
 
